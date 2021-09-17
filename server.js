@@ -26,7 +26,7 @@ const enableCORS = function (req, res, next) {
         "Access-Control-Allow-Origin": origin,
         "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
         "Access-Control-Allow-Headers":
-          "Origin, X-Requested-With, Content-Type, Accept",
+        "Origin, X-Requested-With, Content-Type, Accept",
       });
     }
   }
