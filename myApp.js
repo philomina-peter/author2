@@ -14,15 +14,14 @@ var personSchema = new Schema({
 var Person = mongoose.model("Person", personSchema);
 
 var createAndSavePerson = function(done) {
-  
-  
+   
 var person = new Person({name:"Joe Smith", age: "14", favoriteFoods: ["apple", "carrot"]})
 person.save(function(err, data){
   if (err) return done(err);
   done(null, data); 
-})
+});
  
-} 
+};
 var arrayOfPeople = [
   {name: "Frankie", age: 74, favoriteFoods: ["Del Taco"]},
   {name: "Sol", age: 76, favoriteFoods: ["roast chicken"]},
@@ -50,10 +49,12 @@ var findOneByFood = function(food, done) {
   });
 };
 
-const findPersonById = (personId, done) => {
-  done(null /*, data*/);
+var findPersonById = function(personId, done) {
+  Person.findById(personId, function (err, data) {
+    if (err) return console.log(err);
+    done(null, data);
+  });
 };
-
 const findEditThenSave = (personId, done) => {
   const foodToAdd = "hamburger";
 
