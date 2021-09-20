@@ -2,33 +2,33 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_URI);
 
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-var Schema = mongoose.Schema;
 
-var personSchema = new Schema({
+
+const personSchema = new Schema({
   name: String,
   age: Number,
   favoriteFoods: [String]
 })  
-var Person = mongoose.model("Person", personSchema);
+const Person = mongoose.model("Person", personSchema);
 
-var createAndSavePerson = function(done) {
+const createAndSavePerson = (done) =>{
    
-var person = new Person({name:"Joe Smith", age: "14", favoriteFoods: ["apple", "carrot"]})
+const person = new Person({name:"Joe Smith", age: "14", favoriteFoods: ["apple", "carrot"]})
 person.save(function(err, data){
   if (err) return done(err);
   done(null, data); 
 });
  
 };
-var arrayOfPeople = [
+const arrayOfPeople = [
   {name: "Frankie", age: 74, favoriteFoods: ["Del Taco"]},
   {name: "Sol", age: 76, favoriteFoods: ["roast chicken"]},
   {name: "Robert", age: 78, favoriteFoods: ["wine"]}
 ];
 
-var createManyPeople = function(arrayOfPeople, done) {
+const createManyPeople = function(arrayOfPeople, done) {
   Person.create(arrayOfPeople, function (err, people) {
     if (err) return console.log(err);
     done(null, people);
@@ -36,20 +36,20 @@ var createManyPeople = function(arrayOfPeople, done) {
 };
 
 
-var findPeopleByName = function(personName, done) {
+const findPeopleByName = function(personName, done) {
   Person.find({name: personName}, function (err, personFound) {
     if (err) return console.log(err);
     done(null, personFound);
   });
 };
-var findOneByFood = function(food, done) {
+const findOneByFood = function(food, done) {
   Person.findOne({favoriteFoods: food}, function (err, data) {
     if (err) return console.log(err);
     done(null, data);
   });
 };
 
-var findPersonById = function(personId, done) {
+const findPersonById = function(personId, done) {
   Person.findById(personId, function (err, data) {
     if (err) return console.log(err);
     done(null, data);
@@ -73,10 +73,10 @@ const findAndUpdate = (personName, done) => {
   Person.findOneAndUpdate({name: personName}, {age: ageToSet}, {new: true}, (err, updatedDoc) => {
     if(err) return console.log(err);
     done(null, updatedDoc);
-  })
+  });
 };
 
-var removeById = function(personId, done) {
+const removeById = function(personId, done) {
   Person.findByIdAndRemove(
     personId,
     (err, removedDoc) => {
@@ -85,12 +85,12 @@ var removeById = function(personId, done) {
     }
   ); 
 };
-
 const removeManyPeople = (done) => {
   const nameToRemove = "Mary";
-  Person.remove({name: nameToRemove}, (err, response) => {
-    if(err) return console.log(err);
-    done(null, response);
+  Person.deleteMany({name: nameToRemove}, (err, response) => {
+    if(err) return console.error(err);
+    console.log(JSON.stringify(response))
+    done(null, JSON.stringify(response));
   })
 };
 
